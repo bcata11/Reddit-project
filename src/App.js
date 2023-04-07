@@ -1,57 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
+
 import './App.css';
+import Searchbar from './features/searchBar/Searchbar';
+import Subreddits from './features/subreddits/subreddit';
+//try
+// import { getPosts } from './api/axios';
+// import { useState, useEffect } from 'react';
+import { Route, Routes } from "react-router-dom"
+import Post from './features/Post/Post';
+import { activeSubreddit } from './features/subreddits/subRedditsSlice';
+import { useSelector } from 'react-redux';
+
 
 function App() {
+  // const [posts, setPosts] = useState('')
+  // const [searchResults, setSearchResults] = useState('')
+
+  // useEffect(() => {
+  //   getPosts().then(json => {
+  //     setPosts(json)
+  //     return json
+  //   }).then(json => {
+  //     setSearchResults(json)
+  //   })
+  // }, [])
+  const active = useSelector(activeSubreddit)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
+    <>
+      <Searchbar />
+      <Routes>
+        <Route path="/" element={<Subreddits />} />
+        <Route path="/post:id" component={Post}/>
+        <Route path={active} element={<Subreddits />} />
+
+      </Routes>
+    </>
   );
 }
 
